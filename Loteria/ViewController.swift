@@ -33,15 +33,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var lbGameType: UILabel!
     @IBOutlet weak var scGameType: UISegmentedControl!
     @IBOutlet var balls: [UIButton]!
-    
+
+    // MARK: - Funcion
     override func viewDidLoad() {
         super.viewDidLoad()
         showNumber(for: .megasena)
     }
     
     func showNumber(for type: GameType) {
+        lbGameType.text = type.rawValue;
+        var game: [Int] = []
+        
+        switch type {
+        case .megasena:
+           game = 6>-<60
+           balls.last!.isHidden = false;
+        case .quina:
+            game = 5>-<80
+            balls.last!.isHidden = true;
+        }
+        
+        for (index, game) in game.enumerated() {
+            balls[index].setTitle("\(game)", for: .normal)
+        }
         
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,8 +67,15 @@ class ViewController: UIViewController {
     }
 
     
-    // MARK: Functions
+    // MARK: - IBActions
     @IBAction func generateGame() {
+        switch scGameType.selectedSegmentIndex {
+        case 0:
+            showNumber(for: .megasena)
+        default:
+            showNumber(for: .quina)
+        }
+        
     }
     
     
